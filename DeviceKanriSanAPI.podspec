@@ -7,6 +7,7 @@ Pod::Spec.new do |s|
   s.authors = 'k-kiuchi'
   s.license = 'Proprietary'
   s.homepage = 'https://github.com/kiuchikeisuke/DeviceKanriSanAPI-for-Swift'
+  s.summary = 'DeviceKanriAPI'
   s.source_files = 'DeviceKanriSanAPI/Classes/**/*.swift'
   s.dependency 'RxSwift', '~> 3.4.1'
   s.dependency 'Alamofire', '~> 4.0'
