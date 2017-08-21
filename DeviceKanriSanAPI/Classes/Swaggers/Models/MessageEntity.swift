@@ -9,6 +9,7 @@ import Foundation
 
 
 open class MessageEntity: JSONEncodable {
+
     public var message: String?
 
     public init() {}
@@ -17,7 +18,9 @@ open class MessageEntity: JSONEncodable {
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
         nillableDictionary["message"] = self.message
+
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
     }
 }
+

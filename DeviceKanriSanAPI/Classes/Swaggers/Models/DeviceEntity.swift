@@ -9,6 +9,7 @@ import Foundation
 
 
 open class DeviceEntity: JSONEncodable {
+
     public enum Status: String { 
         case using = "using"
         case free = "free"
@@ -17,7 +18,7 @@ open class DeviceEntity: JSONEncodable {
     public var mailAddress: String?
     public var deviceName: String?
     public var deviceId: String?
-    public var returnDate: Date?
+    public var returnDate: ISOFullDate?
     public var status: Status?
 
     public init() {}
@@ -31,7 +32,9 @@ open class DeviceEntity: JSONEncodable {
         nillableDictionary["deviceId"] = self.deviceId
         nillableDictionary["returnDate"] = self.returnDate?.encodeToJSON()
         nillableDictionary["status"] = self.status?.rawValue
+
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
     }
 }
+

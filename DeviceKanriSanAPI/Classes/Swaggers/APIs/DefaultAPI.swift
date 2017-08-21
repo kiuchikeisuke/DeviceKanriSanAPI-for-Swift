@@ -5,26 +5,24 @@
 // https://github.com/swagger-api/swagger-codegen
 //
 
+import Foundation
 import Alamofire
 import RxSwift
-
 
 
 open class DefaultAPI: APIBase {
     /**
      getList
-     
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getList(completion: @escaping ((_ data: [DeviceEntity]?,_ error: Error?) -> Void)) {
+    open class func getList(completion: @escaping ((_ data: [DeviceEntity]?, _ error: ErrorResponse?) -> Void)) {
         getListWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
     /**
      getList
-     
      - returns: Observable<[DeviceEntity]>
      */
     open class func getList() -> Observable<[DeviceEntity]> {
@@ -37,54 +35,56 @@ open class DefaultAPI: APIBase {
                 }
                 observer.on(.completed)
             }
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 
     /**
      getList
      - GET /exec
-     - examples: [{contentType=application/json, example=[ {
-  "returnDate" : "2000-01-23T04:56:07.000+00:00",
-  "mailAddress" : "aeiou",
-  "userName" : "aeiou",
-  "deviceName" : "aeiou",
-  "deviceId" : "aeiou",
-  "status" : "aeiou"
-} ]}]
 
+     - examples: [{contentType=application/json, example=[ {
+  "returnDate" : "2000-01-23",
+  "mailAddress" : "mailAddress",
+  "userName" : "userName",
+  "deviceName" : "deviceName",
+  "deviceId" : "deviceId",
+  "status" : "using"
+}, {
+  "returnDate" : "2000-01-23",
+  "mailAddress" : "mailAddress",
+  "userName" : "userName",
+  "deviceName" : "deviceName",
+  "deviceId" : "deviceId",
+  "status" : "using"
+} ]}]
      - returns: RequestBuilder<[DeviceEntity]> 
      */
     open class func getListWithRequestBuilder() -> RequestBuilder<[DeviceEntity]> {
         let path = "/exec"
         let URLString = DeviceKanriSanAPIAPI.basePath + path
+        let parameters: [String:Any]? = nil
 
-        let nillableParameters: [String:Any?] = [:]
- 
-        let parameters = APIHelper.rejectNil(nillableParameters)
- 
-        let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
+        let url = NSURLComponents(string: URLString)
+
         let requestBuilder: RequestBuilder<[DeviceEntity]>.Type = DeviceKanriSanAPIAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
 
     /**
      update
-     
      - parameter body: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func update(body: DeviceEntity, completion: @escaping ((_ data: MessageEntity?,_ error: Error?) -> Void)) {
+    open class func update(body: DeviceEntity, completion: @escaping ((_ data: MessageEntity?, _ error: ErrorResponse?) -> Void)) {
         updateWithRequestBuilder(body: body).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
     /**
      update
-     
      - parameter body: (body)  
      - returns: Observable<MessageEntity>
      */
@@ -98,7 +98,7 @@ open class DefaultAPI: APIBase {
                 }
                 observer.on(.completed)
             }
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 
@@ -106,24 +106,23 @@ open class DefaultAPI: APIBase {
      update
      - POST /exec
      - update
-     - examples: [{contentType=application/json, example={
-  "message" : "aeiou"
-}}]
-     
-     - parameter body: (body)  
 
+     - examples: [{contentType=application/json, example={
+  "message" : "message"
+}}]
+     - parameter body: (body)  
      - returns: RequestBuilder<MessageEntity> 
      */
     open class func updateWithRequestBuilder(body: DeviceEntity) -> RequestBuilder<MessageEntity> {
         let path = "/exec"
         let URLString = DeviceKanriSanAPIAPI.basePath + path
         let parameters = body.encodeToJSON() as? [String:AnyObject]
- 
-        let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
+
+        let url = NSURLComponents(string: URLString)
+
         let requestBuilder: RequestBuilder<MessageEntity>.Type = DeviceKanriSanAPIAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: URLString, parameters: convertedParameters, isBody: true)
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
 
 }
