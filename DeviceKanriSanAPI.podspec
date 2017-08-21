@@ -5,7 +5,6 @@ Pod::Spec.new do |s|
   s.version = '1.0.0'
   s.source = { :git => "https://github.com/kiuchikeisuke/DeviceKanriSanAPI-for-Swift.git"}
   s.authors = 'k-kiuchi'
-  s.docset_url = 'https://github.com/kiuchikeisuke/DeviceKanriSanAPI-for-Swift'
   s.license = 'Proprietary'
   s.homepage = 'https://github.com/kiuchikeisuke/DeviceKanriSanAPI-for-Swift'
   s.source_files = 'DeviceKanriSanAPI/Classes/**/*.swift'
