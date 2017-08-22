@@ -15,7 +15,7 @@ open class DefaultAPI: APIBase {
      getList
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getList(completion: @escaping ((_ data: [DeviceEntity]?, _ error: ErrorResponse?) -> Void)) {
+    open class func getList(completion: @escaping ((_ data: DeviceEntities?, _ error: ErrorResponse?) -> Void)) {
         getListWithRequestBuilder().execute { (response, error) -> Void in
             completion(response?.body, error)
         }
@@ -23,9 +23,9 @@ open class DefaultAPI: APIBase {
 
     /**
      getList
-     - returns: Observable<[DeviceEntity]>
+     - returns: Observable<DeviceEntities>
      */
-    open class func getList() -> Observable<[DeviceEntity]> {
+    open class func getList() -> Observable<DeviceEntities> {
         return Observable.create { observer -> Disposable in
             getList() { data, error in
                 if let error = error {
@@ -43,31 +43,17 @@ open class DefaultAPI: APIBase {
      getList
      - GET /exec
 
-     - examples: [{contentType=application/json, example=[ {
-  "returnDate" : "2000-01-23",
-  "mailAddress" : "mailAddress",
-  "userName" : "userName",
-  "deviceName" : "deviceName",
-  "deviceId" : "deviceId",
-  "status" : "using"
-}, {
-  "returnDate" : "2000-01-23",
-  "mailAddress" : "mailAddress",
-  "userName" : "userName",
-  "deviceName" : "deviceName",
-  "deviceId" : "deviceId",
-  "status" : "using"
-} ]}]
-     - returns: RequestBuilder<[DeviceEntity]> 
+     - examples: [{contentType=application/json, example=""}]
+     - returns: RequestBuilder<DeviceEntities> 
      */
-    open class func getListWithRequestBuilder() -> RequestBuilder<[DeviceEntity]> {
+    open class func getListWithRequestBuilder() -> RequestBuilder<DeviceEntities> {
         let path = "/exec"
         let URLString = DeviceKanriSanAPIAPI.basePath + path
         let parameters: [String:Any]? = nil
 
         let url = NSURLComponents(string: URLString)
 
-        let requestBuilder: RequestBuilder<[DeviceEntity]>.Type = DeviceKanriSanAPIAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<DeviceEntities>.Type = DeviceKanriSanAPIAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }

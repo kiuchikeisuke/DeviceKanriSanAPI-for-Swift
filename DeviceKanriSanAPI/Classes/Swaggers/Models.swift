@@ -251,7 +251,15 @@ class Decoders {
             	return .failure(.typeMismatch(expected: "ISO date", actual: "\(source)"))
             }
         }
-
+        // Decoder for [DeviceEntities]
+        Decoders.addDecoder(clazz: [DeviceEntities].self) { (source: AnyObject, instance: AnyObject?) -> Deviced<[DeviceEntities]> in
+           return Decoders.decode(clazz: [DeviceEntities].self, source: source)
+        }
+        // Decoder for DeviceEntities
+        Decoders.addDecoder(clazz: DeviceEntities.self) { (source: AnyObject, instance: AnyObject?) -> Deviced<DeviceEntities> in
+           let sourceArray = source as! [AnyObject]
+           return sourceArray.map({ Decoders.decode(clazz: DeviceEntity.self, source: $0, instance: nil) })
+        }
         // Decoder for DeviceEntity
         Decoders.addDecoder(clazz: DeviceEntity.self) { (source: AnyObject, instance: AnyObject?) -> Decoded<DeviceEntity> in
             if let sourceDictionary = source as? [AnyHashable: Any] {
